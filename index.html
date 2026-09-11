@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Emvori</title>
+<meta name="description" content="Stable public entry point for Emvori.">
+<style>
+body{margin:0;background:#0d1114;color:#e8f0f2;font:16px/1.55 system-ui,sans-serif;display:grid;min-height:100vh;place-items:center}
+main{width:min(680px,calc(100% - 40px));padding:32px;border:1px solid #263238;border-radius:18px;background:#11171b}
+h1{font-size:2rem;margin:0 0 8px}.muted{color:#9eacb1}.status{margin:20px 0;padding:14px;border-radius:12px;background:#0b2020}
+a.button{display:inline-block;padding:12px 18px;border-radius:10px;background:#1f6f67;color:white;text-decoration:none;font-weight:700}
+small{display:block;margin-top:24px;color:#7f8c91}code{color:#90e0d7}
+</style>
+</head>
+<body><main>
+<h1>Emvori</h1>
+<p class="muted">Stable continuity entry point</p>
+<div class="status" id="status">Locating the current Emvori endpoint…</div>
+<a class="button" id="open" href="#" rel="noopener">Open Emvori</a>
+<p class="muted">Support: <a href="mailto:support.emvori@gmail.com">support.emvori@gmail.com</a></p>
+<small>This page contains no private application data or credentials.</small>
+</main>
+<script>
+(async()=>{try{
+ const r=await fetch('./current.json?'+Date.now(),{cache:'no-store'});
+ const c=await r.json();
+ const u=c.primary||c.fallback;
+ if(!u)throw new Error('no endpoint');
+ document.getElementById('open').href=u;
+ document.getElementById('status').textContent='Emvori endpoint is available. Updated '+new Date(c.updatedAt).toLocaleString()+'.';
+}catch(e){document.getElementById('status').textContent='Endpoint discovery is temporarily unavailable. Contact support.emvori@gmail.com.'}})();
+</script></body></html>
