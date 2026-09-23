@@ -3,39 +3,114 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Emvori</title>
-<meta name="description" content="Stable public entry point for Emvori.">
+<title>Emvori — Independent AI workspace</title>
+<meta name="description" content="Emvori is a private-by-default AI workspace for chat, cited research, and approval-gated agent work. Not an Aetheron token surface.">
+<link rel="canonical" href="https://mastatrill.github.io/emvori-status/">
 <style>
-body{margin:0;background:#0d1114;color:#e8f0f2;font:16px/1.55 system-ui,sans-serif;display:grid;min-height:100vh;place-items:center}
-main{width:min(680px,calc(100% - 40px));padding:32px;border:1px solid #263238;border-radius:18px;background:#11171b}
-h1{font-size:2rem;margin:0 0 8px}.muted{color:#9eacb1}.status{margin:20px 0;padding:14px;border-radius:12px;background:#0b2020}
-a.button{display:inline-block;padding:12px 18px;border-radius:10px;background:#1f6f67;color:white;text-decoration:none;font-weight:700}
-small{display:block;margin-top:24px;color:#7f8c91}
+:root{--bg:#0d1114;--card:#11171b;--line:#263238;--text:#e8f0f2;--muted:#9eacb1;--dim:#7f8c91;--teal:#1f6f67;--teal2:#7ed9ce}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,sans-serif}
+a{color:var(--teal2)}header,main,footer{width:min(920px,calc(100% - 40px));margin:0 auto}
+header{display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:16px}
+.brand{font-weight:750}.nav{display:flex;gap:16px;flex-wrap:wrap;font-size:14px}
+.nav a{color:var(--muted);text-decoration:none}.nav a:hover{color:var(--text)}
+.hero{padding:12px 0 8px}h1{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;margin:0 0 12px}
+.lede{color:var(--muted);font-size:1.05rem;max-width:46rem}
+.status{margin:20px 0;padding:14px 16px;border-radius:12px;background:#0b2020;border:1px solid #1a3a38}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 8px}
+a.button,button.button{display:inline-block;padding:12px 18px;border-radius:10px;background:var(--teal);color:#fff;text-decoration:none;font-weight:700;border:0;cursor:pointer}
+a.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:28px 0}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+.card h2{margin:0 0 8px;font-size:1.05rem}.card p{margin:0;color:var(--muted)}
+table{width:100%;border-collapse:collapse;margin:8px 0 20px;font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left;vertical-align:top}
+th{color:var(--dim);font-weight:600}td strong{display:block}
+.note{color:var(--muted);font-size:14px}
+footer{padding:28px 0 48px;color:var(--dim);font-size:13px}
+.badge{display:inline-block;font-size:12px;letter-spacing:.04em;color:var(--teal2);text-transform:uppercase}
 </style>
 </head>
-<body><main>
-<h1>Emvori</h1>
-<p class="muted">Stable continuity entry point</p>
-<div class="status" id="status">Checking Emvori endpoints…</div>
-<a class="button" id="open" href="#" rel="noopener">Open Emvori</a>
-<p class="muted">Support: <a href="mailto:support.emvori@gmail.com">support.emvori@gmail.com</a></p>
-<small>This page contains no private application data or credentials.</small>
+<body>
+<header>
+  <div class="brand">Emvori</div>
+  <nav class="nav">
+    <a href="./plans.html">Plans</a>
+    <a href="./privacy.html">Privacy</a>
+    <a href="./models.html">Models</a>
+    <a href="./support.html">Support</a>
+  </nav>
+</header>
+<main>
+  <p class="badge">Independent AI workspace · v0.20</p>
+  <section class="hero">
+    <h1>Private by default. Actions wait for you.</h1>
+    <p class="lede">Emvori is a workspace for answers, cited web research, and multi-step agent work. Anonymous chat works without an account. Cloud memory, paid plans, Gmail drafts, and Operator actions require sign-in and your approval.</p>
+    <div class="status" id="status">Checking live endpoints…</div>
+    <div class="actions">
+      <a class="button" id="open" href="https://emvori-2njpkx.v2.appdeploy.ai/" rel="noopener">Open Emvori</a>
+      <a class="ghost button" href="./plans.html">See plan limits</a>
+    </div>
+    <p class="note">This page is the stable public entry. It is not an Aetheron, AETH, or token surface. <code>emvori.ai</code> is not claimed as live until registry and DNS are verified.</p>
+  </section>
+  <section class="grid">
+    <article class="card"><h2>Chat</h2><p>Ask anything or attach a file. Auto, Fast, or Deep reasoning. Browser history stays local until you sign in.</p></article>
+    <article class="card"><h2>Research</h2><p>Fresh public-web sources with citations. Built for briefs, due diligence, and what changed this week.</p></article>
+    <article class="card"><h2>Agent</h2><p>Multi-step help with an approval gate. Emvori can plan and draft. It does not send mail or take external actions until you approve.</p></article>
+  </section>
+  <h2>What stays private</h2>
+  <ul class="note">
+    <li>Anonymous sessions do not require an account. Chat history starts in this browser.</li>
+    <li>Sign-in unlocks cloud memory, goals, verified plan limits, and integrations.</li>
+    <li>Gmail, when connected on Pro/Enterprise, is draft-only. There is no send capability.</li>
+    <li>Stripe handles card details. Emvori stores entitlement state, not full card numbers.</li>
+    <li>Prompts can reach model providers that perform the inference. Do not paste secrets.</li>
+  </ul>
+  <h2>Public plan limits</h2>
+  <p class="note">These are the server-enforced daily allowances from the current product policy. Remaining counts after sign-in reset each UTC day.</p>
+  <table>
+    <thead><tr><th>Plan</th><th>Chat / Research / Agent per day</th><th>Memory &amp; goals</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Free</strong>$0</td><td>20 / 3 / 1<br>4 agent steps</td><td>10 memories · 5 goals</td><td>Deep preview only. No Gmail drafts.</td></tr>
+      <tr><td><strong>Pro</strong>$20 / month</td><td>250 / 40 / 20<br>12 agent steps</td><td>500 memories · 100 goals</td><td>Full Deep reasoning, Gmail drafts, Operator external actions after approval.</td></tr>
+      <tr><td><strong>Enterprise</strong>Custom</td><td>1,000 / 200 / 100 per user<br>24 agent steps</td><td>5,000 memories · 1,000 goals</td><td>Request-only. A request never grants access by itself.</td></tr>
+    </tbody>
+  </table>
 </main>
+<footer>
+  Support: <a href="mailto:support.emvori@gmail.com">support.emvori@gmail.com</a>
+  · <a href="./privacy.html">Privacy</a>
+  · <a href="./models.html">Models</a>
+  · No private application data or credentials are stored on this page.
+</footer>
 <script>
 const statusEl=document.getElementById('status'),openEl=document.getElementById('open');
 async function healthy(base){
- const c=new AbortController(),t=setTimeout(()=>c.abort(),3500);
- try{const r=await fetch(base.replace(/\/$/,'')+'/railway-health',{cache:'no-store',signal:c.signal});return r.ok}
- catch{return false}finally{clearTimeout(t)}
+  const c=new AbortController(),t=setTimeout(()=>c.abort(),3500);
+  try{
+    const root=base.replace(/\/$/,'');
+    const paths=['/railway-health','/api/emvori-health'];
+    for(const path of paths){
+      try{const r=await fetch(root+path,{cache:'no-store',signal:c.signal,mode:'cors'}); if(r.ok) return true;}catch{}
+    }
+    return false;
+  }catch{return false}finally{clearTimeout(t)}
 }
-(async()=>{try{
- const r=await fetch('./current.json?'+Date.now(),{cache:'no-store'}),c=await r.json();
- const choices=[c.primary,c.fallback].filter(Boolean);
- let chosen=null;
- for(const u of choices){if(await healthy(u)){chosen=u;break}}
- if(!chosen) chosen=choices[0]||null;
- if(!chosen) throw new Error('no endpoint');
- openEl.href=chosen;
- statusEl.textContent=chosen===c.primary?'Primary Emvori endpoint is healthy.':'Backup Emvori endpoint is active.';
-}catch{statusEl.textContent='Endpoint discovery is temporarily unavailable. Contact support.emvori@gmail.com.'}})();
-</script></body></html>
+(async()=>{
+  const defaults=['https://emvori-2njpkx.v2.appdeploy.ai/','https://emvori-18-232-7-146.nip.io/'];
+  try{
+    const r=await fetch('./current.json?'+Date.now(),{cache:'no-store'});
+    const c=await r.json();
+    const choices=[c.primary,c.fallback,...defaults].filter((u,i,arr)=>u && arr.indexOf(u)===i);
+    let chosen=null, usedPrimary=false;
+    for(const u of choices){if(await healthy(u)){chosen=u; usedPrimary=u===c.primary; break}}
+    if(!chosen) chosen=choices[0]||defaults[0];
+    openEl.href=chosen;
+    statusEl.textContent=usedPrimary?'Primary Emvori endpoint is healthy.':'A reachable Emvori endpoint is ready. Open uses the first healthy host.';
+  }catch{
+    statusEl.textContent='Live discovery is limited. The AppDeploy origin remains available.';
+    openEl.href=defaults[0];
+  }
+})();
+</script>
+</body>
+</html>
