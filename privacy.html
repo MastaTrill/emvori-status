@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Emvori Privacy</title>
+<meta name="description" content="What Emvori stores, what leaves the browser, and how billing and Gmail are handled.">
+<style>
+body{margin:0;background:#0d1114;color:#d9e3e5;font:16px/1.65 system-ui,sans-serif}
+main{max-width:760px;margin:auto;padding:40px 20px 64px}
+h1,h2{color:#fff}h1{font-size:30px}h2{font-size:19px;margin-top:28px}
+p,li{color:#aab6ba}a{color:#7ed9ce}small{color:#7b898e}
+.box{border:1px solid #29343a;background:#11171b;border-radius:12px;padding:16px}
+</style>
+</head>
+<body>
+<main>
+<p><a href="./">← Emvori</a></p>
+<h1>Privacy</h1>
+<small>Last updated September 23, 2026</small>
+<p class="box">Emvori is private by default. Anonymous chat works without an account. Sign-in is required only for cloud memory, goals, verified plan enforcement, paid checkout, and integrations.</p>
+<h2>What stays in the browser</h2>
+<ul>
+  <li>Anonymous conversation history starts in local browser storage.</li>
+  <li>You can use Chat without creating an account.</li>
+  <li>Signing in syncs eligible workspace state to the account you authenticate.</li>
+</ul>
+<h2>What Emvori processes after you use a feature</h2>
+<ul>
+  <li><strong>Account:</strong> name, email, and an account identifier when you sign in.</li>
+  <li><strong>Product content:</strong> prompts, replies, research queries, saved memories, goals, and approved Operator actions needed to run the feature you asked for.</li>
+  <li><strong>Usage:</strong> plan counters, limited product events, errors, and health signals.</li>
+  <li><strong>Billing:</strong> customer, subscription, and entitlement identifiers. Stripe processes payment cards. Emvori does not need your full card number to know your plan.</li>
+  <li><strong>Optional Gmail:</strong> compose-scope OAuth tokens, encrypted at rest, used only to create unsent drafts after explicit approval. Emvori cannot send mail.</li>
+  <li><strong>Safety reports:</strong> only the category and excerpt you submit. Hidden reasoning and credentials are not attached automatically.</li>
+</ul>
+<h2>What leaves Emvori during inference</h2>
+<p>When you ask Emvori to answer, research, or run an agent, prompt text and necessary context are sent to the model providers that perform inference. Research mode also retrieves public web pages. Do not paste passwords, private keys, seed phrases, or full payment-card numbers into prompts.</p>
+<h2>What Emvori is not</h2>
+<ul>
+  <li>Not an Aetheron token wallet, presale, or AETH surface.</li>
+  <li>Not a claim that <code>emvori.ai</code> is live. That hostname is unpublished until registry and DNS are verified.</li>
+  <li>Not a guarantee of local-only inference. Managed cloud models are the default production path.</li>
+</ul>
+<h2>Retention and deletion</h2>
+<p>You can delete memories and goals in the product, disconnect Gmail, and manage an eligible paid subscription in the Stripe portal. Signed-in users can request permanent account deletion. Processing can take up to 7 days. Limited billing, security, tax, or legal records may be kept where the law requires it.</p>
+<h2>Contact</h2>
+<p><a href="mailto:support.emvori@gmail.com">support.emvori@gmail.com</a></p>
+</main>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Emvori Models</title>
+<style>
+body{margin:0;background:#0d1114;color:#d9e3e5;font:16px/1.65 system-ui,sans-serif}
+main{max-width:760px;margin:auto;padding:40px 20px 64px}
+h1,h2{color:#fff}p,li{color:#aab6ba}a{color:#7ed9ce}
+.box{border:1px solid #29343a;background:#11171b;border-radius:12px;padding:16px}
+</style>
+</head>
+<body>
+<main>
+<p><a href="./">← Emvori</a></p>
+<h1>Models and routing</h1>
+<p class="box">Emvori does not train a public foundation model of its own. Production answers run through a managed provider path with automatic fallback when a provider is rate-limited, unauthorized, or down.</p>
+<h2>What is true today</h2>
+<ul>
+  <li>Chat, Research, and Agent share a routed inference layer rather than a single hard-coded public model name.</li>
+  <li>Reasoning profile (Auto / Fast / Deep) changes how much work the workspace spends before answering. Deep on Free is preview-only.</li>
+  <li>Research retrieves public web sources and attaches citations. Those pages are third-party sites.</li>
+  <li>A local-model bridge exists for operators who point Emvori at a model they run themselves. That is opt-in, not the default public path.</li>
+  <li>Audio and document intake can use a separate managed / OCR fallback chain.</li>
+</ul>
+<h2>What we will not claim</h2>
+<ul>
+  <li>We will not publish a fake always-one-vendor badge. The live route can change when a provider fails.</li>
+  <li>We will not claim on-device-only inference for the public AppDeploy origin.</li>
+  <li>Frontier evaluation endpoints in the private source tree are operator/quality surfaces, not a promise that every chat uses every research module.</li>
+</ul>
+<h2>Your control</h2>
+<p>Anonymous chat still sends the current prompt to the inference path. Sign-in does not change that. It only adds account-scoped memory, limits, and integrations. Keep secrets out of prompts.</p>
+</main>
+</body>
+</html>
