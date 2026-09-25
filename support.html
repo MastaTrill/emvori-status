@@ -18,7 +18,8 @@ h1,h2{color:#fff}p,li{color:#aab6ba}a{color:#7ed9ce}
 <p class="box">Email <a href="mailto:support.emvori@gmail.com">support.emvori@gmail.com</a>. Do not send passwords, private keys, OAuth codes, or full card numbers.</p>
 <h2>Before you write</h2>
 <ul>
-  <li>Confirm the status page can open a healthy host.</li>
+  <li>Confirm the status page reports a public origin as live. A Cloudflare or Tailscale tunnel is operator-only, not public-live.</li>
+  <li>Do not use the AppDeploy URL (<code>emvori-2njpkx.v2.appdeploy.ai</code>). That origin is a legacy warmup shell.</li>
   <li>Retry once if a single request fails.</li>
   <li>If plan state looks wrong, sign in and refresh billing from Launch.</li>
 </ul>
