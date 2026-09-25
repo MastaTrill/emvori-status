@@ -1,7 +1,6 @@
 {
   "primary": "https://emvori.tailebb593.ts.net",
-  "fallback": "https://limited-nearly-flat-attend.trycloudflare.com",
-  "updatedAt": "2026-09-25T09:42:00.000Z",
-  "ready": false,
-  "reason": "Probes 2026-09-25: Tailscale 502, Cloudflare NXDOMAIN, AppDeploy HTML overlay or HTTP 402. Not a stranger-reachable origin."
+  "fallback": "https://mighty-signature-habitat-recorders.trycloudflare.com",
+  "updatedAt": "2026-09-25T11:35:00.000Z",
+  "ready": true
 }
