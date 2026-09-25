@@ -17,6 +17,7 @@ header{display:flex;justify-content:space-between;align-items:center;padding:22p
 .lede{color:var(--muted);font-size:1.05rem;max-width:46rem}
 .status{margin:20px 0;padding:14px 16px;border-radius:12px;background:#0b2020;border:1px solid #1a3a38}
 .status.down{background:#2a1212;border-color:#5a2020}
+.status.preview{background:#241c0b;border-color:#6a5420}
 .actions{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 8px}
 a.button,button.button{display:inline-block;padding:12px 18px;border-radius:10px;background:var(--teal);color:#fff;text-decoration:none;font-weight:700;border:0;cursor:pointer}
 a.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
@@ -51,9 +52,8 @@ footer{padding:28px 0 48px;color:var(--dim);font-size:13px}
     <div class="actions">
       <a class="button" id="open" href="#" rel="noopener">Open Emvori</a>
       <a class="ghost button" href="./plans.html">See plan limits</a>
-      <a class="ghost button" id="operator" hidden rel="noopener">Operator workspace (not public-live)</a>
     </div>
-    <p class="note">This page is the stable public entry. It is not an Aetheron, AETH, or token surface. <code>emvori.ai</code> is not claimed as live until registry and DNS are verified. AppDeploy (<code>emvori-2njpkx.v2.appdeploy.ai</code>) is a legacy warmup shell, not an Open target.</p>
+    <p class="note">This page is the stable public entry. It is not an Aetheron, AETH, or token surface. <code>emvori.ai</code> is not claimed as live until registry and DNS are verified. AppDeploy is a legacy warmup shell, not an Open target.</p>
   </section>
   <section class="grid">
     <article class="card"><h2>Chat</h2><p>Ask anything or attach a file. Auto, Fast, or Deep reasoning. Browser history stays local until you sign in.</p></article>
@@ -119,46 +119,45 @@ async function healthy(base){
     return false;
   }catch{return false}finally{clearTimeout(t)}
 }
-function markDown(message, href){
+function markDown(message){
   statusEl.classList.add('down');
+  statusEl.classList.remove('preview');
   statusEl.textContent=message;
-  if(href && hostClass(href)==='public'){
-    openEl.href=href;
-    openEl.textContent='Last known public host (not live)';
-  }else{
-    openEl.removeAttribute('href');
-    openEl.textContent='Not public-live';
-  }
+  openEl.removeAttribute('href');
+  openEl.textContent='Not public-live';
 }
-function showOperator(url){
-  const op=document.getElementById('operator');
-  if(!op || !url) return;
-  op.hidden=false;
-  op.href=url;
+function markPreview(url, message){
+  statusEl.classList.remove('down');
+  statusEl.classList.add('preview');
+  statusEl.textContent=message;
+  openEl.href=url;
+  openEl.textContent='Open free preview';
 }
 (async()=>{
   try{
     const r=await fetch('./current.json?'+Date.now(),{cache:'no-store'});
     const c=await r.json();
-    if(c.operatorOrigin) showOperator(c.operatorOrigin);
     const declaredReady=c.ready===true;
     const choices=[c.primary,c.fallback].filter((u,i,arr)=>u && arr.indexOf(u)===i && hostClass(u)==='public');
-    if(!declaredReady || !choices.length){
-      markDown(c.reason || 'No stranger-reachable origin is answering JSON health.', '');
+    if(declaredReady && choices.length){
+      let chosen=null;
+      for(const u of choices){ if(await healthy(u)){ chosen=u; break; } }
+      if(chosen){
+        openEl.href=chosen;
+        openEl.textContent='Open Emvori';
+        statusEl.classList.remove('down');
+        statusEl.classList.remove('preview');
+        statusEl.textContent='Primary public origin returned JSON ready.';
+        return;
+      }
+    }
+    if(c.freePreview && c.operatorOrigin){
+      markPreview(c.operatorOrigin, c.reason || 'Free preview on the operator tunnel. Not a paid public vendor.');
       return;
     }
-    let chosen=null;
-    for(const u of choices){ if(await healthy(u)){ chosen=u; break; } }
-    if(!chosen){
-      markDown('Declared public hosts did not return JSON ready. The workspace is not live.', choices[0]||'');
-      return;
-    }
-    openEl.href=chosen;
-    openEl.textContent='Open Emvori';
-    statusEl.classList.remove('down');
-    statusEl.textContent='Primary public origin returned JSON ready.';
+    markDown(c.reason || 'No stranger-reachable origin is answering JSON health.');
   }catch{
-    markDown('Live discovery failed. Do not assume the workspace is answering.', '');
+    markDown('Live discovery failed. Do not assume the workspace is answering.');
   }
 })();
 </script>
