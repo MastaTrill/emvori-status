@@ -16,6 +16,7 @@ header{display:flex;justify-content:space-between;align-items:center;padding:22p
 .hero{padding:12px 0 8px}h1{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;margin:0 0 12px}
 .lede{color:var(--muted);font-size:1.05rem;max-width:46rem}
 .status{margin:20px 0;padding:14px 16px;border-radius:12px;background:#0b2020;border:1px solid #1a3a38}
+.status.down{background:#2a1212;border-color:#5a2020}
 .actions{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 8px}
 a.button,button.button{display:inline-block;padding:12px 18px;border-radius:10px;background:var(--teal);color:#fff;text-decoration:none;font-weight:700;border:0;cursor:pointer}
 a.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
@@ -68,7 +69,7 @@ footer{padding:28px 0 48px;color:var(--dim);font-size:13px}
   <h2>Public plan limits</h2>
   <p class="note">These are the server-enforced daily allowances from the current product policy. Remaining counts after sign-in reset each UTC day.</p>
   <table>
-    <thead><tr><th>Plan</th><th>Chat / Research / Agent per day</th><th>Memory &amp; goals</th><th>Notes</th></tr></thead>
+    <thead><tr><th>Plan</th><th>Chat / Research / Agent per day</th><th>Memory & goals</th><th>Notes</th></tr></thead>
     <tbody>
       <tr><td><strong>Free</strong>$0</td><td>20 / 3 / 1<br>4 agent steps</td><td>10 memories · 5 goals</td><td>Deep preview only. No Gmail drafts.</td></tr>
       <tr><td><strong>Pro</strong>$20 / month</td><td>250 / 40 / 20<br>12 agent steps</td><td>500 memories · 100 goals</td><td>Full Deep reasoning, Gmail drafts, Operator external actions after approval.</td></tr>
@@ -84,30 +85,58 @@ footer{padding:28px 0 48px;color:var(--dim);font-size:13px}
 </footer>
 <script>
 const statusEl=document.getElementById('status'),openEl=document.getElementById('open');
+function looksJsonReady(text){
+  const trimmed=String(text||'').trim();
+  if(!trimmed||trimmed.startsWith('<')) return false;
+  let json;
+  try{json=JSON.parse(trimmed)}catch{return false}
+  if(!json||typeof json!=='object') return false;
+  if(json.code==='APP_TEMPORARILY_UNAVAILABLE') return false;
+  return json.ready===true||json.ok===true||json.healthy===true||json.status==='ready'||json.status==='operational';
+}
 async function healthy(base){
   const c=new AbortController(),t=setTimeout(()=>c.abort(),3500);
   try{
     const root=base.replace(/\/$/,'');
     const paths=['/railway-health','/api/emvori-health'];
     for(const path of paths){
-      try{const r=await fetch(root+path,{cache:'no-store',signal:c.signal,mode:'cors'}); if(r.ok) return true;}catch{}
+      try{
+        const r=await fetch(root+path,{cache:'no-store',signal:c.signal,mode:'cors',headers:{Accept:'application/json'}});
+        const text=await r.text();
+        if(r.ok && looksJsonReady(text)) return true;
+      }catch{}
     }
     return false;
   }catch{return false}finally{clearTimeout(t)}
 }
 (async()=>{
   const defaults=['https://emvori-2njpkx.v2.appdeploy.ai/','https://emvori-18-232-7-146.nip.io/'];
+  const apiHealth='https://api-v2.appdeploy.ai/app/emvori-2njpkx';
   try{
     const r=await fetch('./current.json?'+Date.now(),{cache:'no-store'});
     const c=await r.json();
     const choices=[c.primary,c.fallback,...defaults].filter((u,i,arr)=>u && arr.indexOf(u)===i);
     let chosen=null, usedPrimary=false;
     for(const u of choices){if(await healthy(u)){chosen=u; usedPrimary=u===c.primary; break}}
-    if(!chosen) chosen=choices[0]||defaults[0];
-    openEl.href=chosen;
-    statusEl.textContent=usedPrimary?'Primary Emvori endpoint is healthy.':'A reachable Emvori endpoint is ready. Open uses the first healthy host.';
+    const apiUp=await healthy(apiHealth);
+    if(chosen && apiUp){
+      openEl.href=chosen;
+      statusEl.classList.remove('down');
+      statusEl.textContent=usedPrimary?'Primary Emvori endpoint is healthy.':'A reachable Emvori endpoint is ready. Open uses the first healthy host.';
+      return;
+    }
+    if(chosen && !apiUp){
+      openEl.href=chosen;
+      statusEl.classList.add('down');
+      statusEl.textContent='Frontend host answered, but the production API is paused or unavailable. Chat may not respond.';
+      return;
+    }
+    openEl.href=choices[0]||defaults[0];
+    statusEl.classList.add('down');
+    statusEl.textContent='No stranger-reachable origin is answering JSON health. The Open button still points at the last known host.';
   }catch{
-    statusEl.textContent='Live discovery is limited. The AppDeploy origin remains available.';
+    statusEl.classList.add('down');
+    statusEl.textContent='Live discovery failed. Do not assume the workspace is answering.';
     openEl.href=defaults[0];
   }
 })();
