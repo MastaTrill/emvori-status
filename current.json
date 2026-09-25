@@ -1,6 +1,10 @@
 {
-  "primary": "https://emvori.tailebb593.ts.net",
-  "fallback": "https://operations-dish-rays-sponsor.trycloudflare.com",
-  "updatedAt": "2026-09-25T11:58:00.000Z",
-  "ready": true
+  "primary": "",
+  "fallback": "",
+  "operatorOrigin": "https://operations-dish-rays-sponsor.trycloudflare.com",
+  "operatorTailscale": "https://emvori.tailebb593.ts.net",
+  "legacyOrigin": "https://emvori-2njpkx.v2.appdeploy.ai",
+  "updatedAt": "2026-09-25T13:35:00.000Z",
+  "ready": false,
+  "reason": "No stranger-reachable paid public origin. Tailscale is not reachable off-tailnet. AppDeploy is a paused HTML shell and is not an Open target. The Cloudflare tunnel answers JSON health and anonymous /api/chat, but tunnels are not production."
 }
