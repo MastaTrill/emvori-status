@@ -46,9 +46,9 @@ footer{padding:28px 0 48px;color:var(--dim);font-size:13px}
   <section class="hero">
     <h1>Private by default. Actions wait for you.</h1>
     <p class="lede">Emvori is a workspace for answers, cited web research, and multi-step agent work. Anonymous chat works without an account. Cloud memory, paid plans, Gmail drafts, and Operator actions require sign-in and your approval.</p>
-    <div class="status" id="status">Checking live endpoints…</div>
+    <div class="status down" id="status">Checking live endpoints…</div>
     <div class="actions">
-      <a class="button" id="open" href="https://emvori-2njpkx.v2.appdeploy.ai/" rel="noopener">Open Emvori</a>
+      <a class="button" id="open" href="#" rel="noopener">Open Emvori</a>
       <a class="ghost button" href="./plans.html">See plan limits</a>
     </div>
     <p class="note">This page is the stable public entry. It is not an Aetheron, AETH, or token surface. <code>emvori.ai</code> is not claimed as live until registry and DNS are verified.</p>
@@ -85,6 +85,14 @@ footer{padding:28px 0 48px;color:var(--dim);font-size:13px}
 </footer>
 <script>
 const statusEl=document.getElementById('status'),openEl=document.getElementById('open');
+function hostClass(url){
+  try{
+    const host=new URL(url).hostname;
+    if(/\.ts\.net$|trycloudflare\.com$|ngrok|loca\.lt$|\.nip\.io$/i.test(host)) return 'tunnel';
+    if(host==='localhost'||host==='127.0.0.1') return 'local';
+    return 'public';
+  }catch{return 'invalid'}
+}
 function looksJsonReady(text){
   const trimmed=String(text||'').trim();
   if(!trimmed||trimmed.startsWith('<')) return false;
@@ -95,11 +103,11 @@ function looksJsonReady(text){
   return json.ready===true||json.ok===true||json.healthy===true||json.status==='ready'||json.status==='operational';
 }
 async function healthy(base){
+  if(hostClass(base)!=='public') return false;
   const c=new AbortController(),t=setTimeout(()=>c.abort(),3500);
   try{
     const root=base.replace(/\/$/,'');
-    const paths=['/railway-health','/api/emvori-health'];
-    for(const path of paths){
+    for(const path of ['/railway-health','/api/emvori-health']){
       try{
         const r=await fetch(root+path,{cache:'no-store',signal:c.signal,mode:'cors',headers:{Accept:'application/json'}});
         const text=await r.text();
@@ -109,35 +117,34 @@ async function healthy(base){
     return false;
   }catch{return false}finally{clearTimeout(t)}
 }
+function markDown(message, href){
+  statusEl.classList.add('down');
+  statusEl.textContent=message;
+  if(href) openEl.href=href;
+  openEl.textContent='Last known host (not live)';
+}
 (async()=>{
-  const defaults=['https://emvori-2njpkx.v2.appdeploy.ai/','https://emvori-18-232-7-146.nip.io/'];
-  const apiHealth='https://api-v2.appdeploy.ai/app/emvori-2njpkx';
   try{
     const r=await fetch('./current.json?'+Date.now(),{cache:'no-store'});
     const c=await r.json();
-    const choices=[c.primary,c.fallback,...defaults].filter((u,i,arr)=>u && arr.indexOf(u)===i);
-    let chosen=null, usedPrimary=false;
-    for(const u of choices){if(await healthy(u)){chosen=u; usedPrimary=u===c.primary; break}}
-    const apiUp=await healthy(apiHealth);
-    if(chosen && apiUp){
-      openEl.href=chosen;
-      statusEl.classList.remove('down');
-      statusEl.textContent=usedPrimary?'Primary Emvori endpoint is healthy.':'A reachable Emvori endpoint is ready. Open uses the first healthy host.';
+    const declaredReady=c.ready!==false;
+    const choices=[c.primary,c.fallback].filter((u,i,arr)=>u && arr.indexOf(u)===i && hostClass(u)==='public');
+    if(!declaredReady || !choices.length){
+      markDown(c.reason || 'No stranger-reachable origin is answering JSON health.', c.primary||'');
       return;
     }
-    if(chosen && !apiUp){
-      openEl.href=chosen;
-      statusEl.classList.add('down');
-      statusEl.textContent='Frontend host answered, but the production API is paused or unavailable. Chat may not respond.';
+    let chosen=null;
+    for(const u of choices){ if(await healthy(u)){ chosen=u; break; } }
+    if(!chosen){
+      markDown('Declared hosts did not return JSON ready. The workspace is not live.', choices[0]||c.primary||'');
       return;
     }
-    openEl.href=choices[0]||defaults[0];
-    statusEl.classList.add('down');
-    statusEl.textContent='No stranger-reachable origin is answering JSON health. The Open button still points at the last known host.';
+    openEl.href=chosen;
+    openEl.textContent='Open Emvori';
+    statusEl.classList.remove('down');
+    statusEl.textContent='Primary public origin returned JSON ready.';
   }catch{
-    statusEl.classList.add('down');
-    statusEl.textContent='Live discovery failed. Do not assume the workspace is answering.';
-    openEl.href=defaults[0];
+    markDown('Live discovery failed. Do not assume the workspace is answering.', '');
   }
 })();
 </script>
