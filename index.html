@@ -38,6 +38,7 @@ footer{padding:28px 0 48px;color:var(--dim);font-size:13px}
     <a href="./plans.html">Plans</a>
     <a href="./privacy.html">Privacy</a>
     <a href="./models.html">Models</a>
+    <a href="./scoreboard.html">Gates</a>
     <a href="./support.html">Support</a>
   </nav>
 </header>
@@ -50,8 +51,9 @@ footer{padding:28px 0 48px;color:var(--dim);font-size:13px}
     <div class="actions">
       <a class="button" id="open" href="#" rel="noopener">Open Emvori</a>
       <a class="ghost button" href="./plans.html">See plan limits</a>
+      <a class="ghost button" id="operator" hidden rel="noopener">Operator workspace (not public-live)</a>
     </div>
-    <p class="note">This page is the stable public entry. It is not an Aetheron, AETH, or token surface. <code>emvori.ai</code> is not claimed as live until registry and DNS are verified.</p>
+    <p class="note">This page is the stable public entry. It is not an Aetheron, AETH, or token surface. <code>emvori.ai</code> is not claimed as live until registry and DNS are verified. AppDeploy (<code>emvori-2njpkx.v2.appdeploy.ai</code>) is a legacy warmup shell, not an Open target.</p>
   </section>
   <section class="grid">
     <article class="card"><h2>Chat</h2><p>Ask anything or attach a file. Auto, Fast, or Deep reasoning. Browser history stays local until you sign in.</p></article>
@@ -120,23 +122,35 @@ async function healthy(base){
 function markDown(message, href){
   statusEl.classList.add('down');
   statusEl.textContent=message;
-  if(href) openEl.href=href;
-  openEl.textContent='Last known host (not live)';
+  if(href && hostClass(href)==='public'){
+    openEl.href=href;
+    openEl.textContent='Last known public host (not live)';
+  }else{
+    openEl.removeAttribute('href');
+    openEl.textContent='Not public-live';
+  }
+}
+function showOperator(url){
+  const op=document.getElementById('operator');
+  if(!op || !url) return;
+  op.hidden=false;
+  op.href=url;
 }
 (async()=>{
   try{
     const r=await fetch('./current.json?'+Date.now(),{cache:'no-store'});
     const c=await r.json();
-    const declaredReady=c.ready!==false;
+    if(c.operatorOrigin) showOperator(c.operatorOrigin);
+    const declaredReady=c.ready===true;
     const choices=[c.primary,c.fallback].filter((u,i,arr)=>u && arr.indexOf(u)===i && hostClass(u)==='public');
     if(!declaredReady || !choices.length){
-      markDown(c.reason || 'No stranger-reachable origin is answering JSON health.', c.primary||'');
+      markDown(c.reason || 'No stranger-reachable origin is answering JSON health.', '');
       return;
     }
     let chosen=null;
     for(const u of choices){ if(await healthy(u)){ chosen=u; break; } }
     if(!chosen){
-      markDown('Declared hosts did not return JSON ready. The workspace is not live.', choices[0]||c.primary||'');
+      markDown('Declared public hosts did not return JSON ready. The workspace is not live.', choices[0]||'');
       return;
     }
     openEl.href=chosen;
