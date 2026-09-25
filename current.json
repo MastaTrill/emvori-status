@@ -1,11 +1,11 @@
 {
   "primary": "",
   "fallback": "",
-  "operatorOrigin": "https://operations-dish-rays-sponsor.trycloudflare.com",
+  "operatorOrigin": "https://emvori.tailebb593.ts.net",
   "operatorTailscale": "https://emvori.tailebb593.ts.net",
   "legacyOrigin": "https://emvori-2njpkx.v2.appdeploy.ai",
   "freePreview": true,
-  "updatedAt": "2026-09-25T13:43:00.000Z",
+  "updatedAt": "2026-09-25T14:40:00.000Z",
   "ready": false,
-  "reason": "No paid public vendor. Free preview is the Cloudflare tunnel on the operator laptop. It answers chat. It is not Railway/Fly/Vercel production."
+  "reason": "No paid public vendor. Free preview is Tailscale Funnel on the operator laptop. Chat answers. This is not Railway/Fly/Vercel production."
 }
