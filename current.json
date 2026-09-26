@@ -1,7 +1,7 @@
 {
   "primary": "https://emvori-native.onrender.com",
-  "fallback": "https://emvori.tailebb593.ts.net",
-  "updatedAt": "2026-09-26T13:48:00.000Z",
+  "fallback": "",
+  "updatedAt": "2026-09-26T14:12:00.000Z",
   "ready": true,
-  "reason": "Render standalone origin live: emvori-native.onrender.com; Tailscale funnel fallback live: emvori.tailebb593.ts.net"
+  "reason": "Render standalone origin live: emvori-native.onrender.com"
 }
