@@ -1,11 +1,5 @@
 {
-  "primary": "",
-  "fallback": "",
-  "operatorOrigin": "https://emvori.tailebb593.ts.net",
-  "operatorTailscale": "https://emvori.tailebb593.ts.net",
-  "legacyOrigin": "https://emvori-2njpkx.v2.appdeploy.ai",
-  "freePreview": true,
-  "updatedAt": "2026-09-25T14:40:00.000Z",
-  "ready": false,
-  "reason": "No paid public vendor. Free preview is Tailscale Funnel on the operator laptop. Chat answers. This is not Railway/Fly/Vercel production."
+    "primary":  "",
+    "fallback":  "https://lenders-occasional-instructor-some.trycloudflare.com",
+    "updatedAt":  "2026-09-26T11:16:25.2615158Z"
 }
