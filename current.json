@@ -1,5 +1,7 @@
 {
-  "primary": "https://emvori.tailebb593.ts.net",
-  "fallback": "https://excluded-rhode-optimal-born.trycloudflare.com",
-  "updatedAt": "2026-09-26T13:38:00Z"
+  "primary": "https://emvori-native.onrender.com",
+  "fallback": "https://emvori.tailebb593.ts.net",
+  "updatedAt": "2026-09-26T13:48:00.000Z",
+  "ready": true,
+  "reason": "Render standalone origin live: emvori-native.onrender.com; Tailscale funnel fallback live: emvori.tailebb593.ts.net"
 }
