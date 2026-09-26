@@ -1,5 +1,7 @@
 {
   "primary": "",
   "fallback": "https://share-reach-bald-lasting.trycloudflare.com",
-  "updatedAt": "2026-09-26T12:14:30Z"
+  "updatedAt": "2026-09-26T12:50:00.000Z",
+  "ready": false,
+  "reason": "AppDeploy paused (402). No paid public vendor origin yet. Local/canary ORIGIN_READY only; Railway login required for public cutover."
 }
