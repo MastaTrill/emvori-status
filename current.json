@@ -1,7 +1,7 @@
 {
   "primary": "https://emvori-native.onrender.com",
   "fallback": "",
-  "updatedAt": "2026-09-26T14:12:00.000Z",
+  "updatedAt": "2026-09-27T02:22:00.000Z",
   "ready": true,
-  "reason": "Render standalone origin live: emvori-native.onrender.com"
+  "reason": "Render standalone origin live and anonymous /api/chat replies from a stranger network. Second-vendor fallback not deployed (Fly unresolved, Railway 404). AppDeploy/nip.io are legacy overlay shells, not fallback."
 }
