@@ -18,19 +18,20 @@ code{color:#e8f0f2}
 <main>
 <p><a href="./">← Emvori</a></p>
 <h1>Public gates</h1>
-<p class="box">Not a ranking. Not a model arena. These are the only numbers Emvori will put on a public page. Public-live requires a paid non-tunnel origin answering JSON health.</p>
+<p class="box ok">Not a ranking. Not a model arena. These are the only numbers Emvori will put on a public page. Public-live requires a paid non-tunnel origin answering JSON health.</p>
 <table>
-  <thead><tr><th>Gate</th><th>Target</th><th>2026-09-25 13:35 UTC</th></tr></thead>
+  <thead><tr><th>Gate</th><th>Target</th><th>2026-09-25 13:35 UTC</th><th>2026-09-27 08:28 UTC</th></tr></thead>
   <tbody>
-    <tr><td>Stranger-reachable JSON health</td><td>ready on paid public origin</td><td>fail — no public vendor in <code>current.json</code></td></tr>
-    <tr><td>Tailscale <code>emvori.tailebb593.ts.net</code></td><td>operator only</td><td>fail off-net — TLS handshake error</td></tr>
-    <tr><td>Cloudflare tunnel JSON health</td><td>operator only</td><td>pass — <code>/api/emvori-health</code> and <code>/railway-health</code> ready</td></tr>
-    <tr><td>Anonymous <code>POST /api/chat</code> on tunnel</td><td>operator probe</td><td>pass — reply <code>pong</code>, fast profile, 14s</td></tr>
-    <tr><td>Anonymous <code>POST /api/research</code> on tunnel</td><td>operator probe</td><td>fail — Cloudflare 502 origin bad gateway</td></tr>
-    <tr><td>AppDeploy <code>emvori-2njpkx.v2.appdeploy.ai</code></td><td>never public-live</td><td>fail — HTML shell, UI “AI unavailable”</td></tr>
-    <tr><td>Invented citations (bakeoff)</td><td>0</td><td>not run — no public origin</td></tr>
-    <tr><td>False side-effect completions</td><td>0</td><td>not run — no public origin</td></tr>
-    <tr><td>Unknown on no-evidence traps</td><td>required</td><td>not run — no public origin</td></tr>
+    <tr><td>Stranger-reachable JSON health</td><td>ready on paid public origin</td><td>fail — no public vendor in <code>current.json</code></td><td>pass — Render <code>https://emvori-native.onrender.com</code> <code>/api/emvori-health</code> and <code>/railway-health</code> return <code>{"ready":true}</code>; header <code>x-emvori-runtime: native</code></td></tr>
+    <tr><td>Tailscale <code>emvori.tailebb593.ts.net</code></td><td>operator only</td><td>fail off-net — TLS handshake error</td><td>not re-probed off-net; still operator-only</td></tr>
+    <tr><td>Cloudflare tunnel JSON health</td><td>operator only</td><td>pass — tunnel ready</td><td>not used as public-live; Render is the declared primary</td></tr>
+    <tr><td>Anonymous <code>POST /api/chat</code></td><td>stranger network</td><td>pass on tunnel only</td><td>pass on Render — <code>{"messages":[{"role":"user","content":"ping"}]}</code> replies <code>Pong. Emvori workspace is online and ready.</code>, profile <code>fast</code></td></tr>
+    <tr><td>Anonymous <code>POST /api/research</code></td><td>stranger network</td><td>fail — Cloudflare 502</td><td>soft-fail honest — 200-class JSON: not enough matching evidence / add a public URL; Web index 0 sources. Not a 502.</td></tr>
+    <tr><td>AppDeploy <code>emvori-2njpkx.v2.appdeploy.ai</code></td><td>never public-live</td><td>fail — HTML shell</td><td>fail — S3/CloudFront HTML shell still served</td></tr>
+    <tr><td>Second-vendor fallback</td><td>paid public origin</td><td>none</td><td>fail — Fly unresolved, <code>emvori.ai</code> unresolved, Railway not declared</td></tr>
+    <tr><td>Invented citations (bakeoff)</td><td>0</td><td>not run — no public origin</td><td>not run this session</td></tr>
+    <tr><td>False side-effect completions</td><td>0</td><td>not run — no public origin</td><td>not run this session</td></tr>
+    <tr><td>Unknown on no-evidence traps</td><td>required</td><td>not run — no public origin</td><td>research already refuses empty evidence; bakeoff still not run</td></tr>
   </tbody>
 </table>
 <h2>What this page will never say</h2>
@@ -40,7 +41,7 @@ code{color:#e8f0f2}
   <li>Healthy while AppDeploy returns a paused HTML shell</li>
   <li>Public-live because a Tailscale node or Cloudflare quick tunnel returned JSON ready</li>
 </ul>
-<p>Update this table only from a stranger-network probe plus <code>npm run health:public</code> and <code>npm run bakeoff:research</code> artifacts. Related: Emvori issues #195 and #203.</p>
+<p>2026-09-27 probe was a stranger-network curl from a US edge (IAD) against the origin named in <code>current.json</code>. Cellular phone probe still belongs to the operator. Related: Emvori issues #195 and #203.</p>
 </main>
 </body>
 </html>
