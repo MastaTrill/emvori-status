@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Emvori Trust Center</title>
+<meta name="description" content="What Emvori stores, what leaves the browser, what requires approval, and what this product is not.">
+<link rel="canonical" href="https://mastatrill.github.io/emvori-status/trust.html">
+<style>
+:root{--bg:#0d1114;--card:#11171b;--line:#263238;--text:#e8f0f2;--muted:#9eacb1;--dim:#7f8c91;--teal2:#7ed9ce}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,sans-serif}
+main{max-width:760px;margin:auto;padding:40px 20px 64px}
+h1,h2{color:#fff}p,li{color:var(--muted)}a{color:var(--teal2)}
+.box{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:16px;margin:16px 0}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0 24px}
+th,td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left;vertical-align:top}
+th{color:var(--dim);font-weight:600}
+.badge{font-size:12px;letter-spacing:.04em;color:var(--teal2);text-transform:uppercase}
+</style>
+</head>
+<body>
+<main>
+<p><a href="./">← Emvori</a></p>
+<p class="badge">Trust center · updated 2026-09-28</p>
+<h1>What you can verify</h1>
+<p>Emvori is private by default. Actions wait for you. This page is the public answer to the questions buyers and careful users actually ask.</p>
+<div class="box">
+<strong style="color:#fff">One sentence.</strong>
+<p>Emvori can be wrong. It will not pretend it was right, and it will not act unless you say so.</p>
+</div>
+<h2>What stays local</h2>
+<ul>
+  <li>Anonymous chat works without an account.</li>
+  <li>Anonymous history starts in this browser.</li>
+  <li>Sign-in is required only for cloud memory, goals, verified plan limits, paid checkout, and integrations.</li>
+</ul>
+<h2>What leaves Emvori</h2>
+<table>
+  <thead><tr><th>Surface</th><th>What is sent</th><th>Where</th></tr></thead>
+  <tbody>
+    <tr><td>Chat / Agent inference</td><td>Current prompt and necessary context</td><td>Routed model providers. Route can change on failover. See <a href="./models.html">Models</a>.</td></tr>
+    <tr><td>Research</td><td>Query plus retrieved public pages</td><td>Web engine + inference path. Thin evidence produces an honest refusal, not invented citations.</td></tr>
+    <tr><td>Account</td><td>Name, email, account id</td><td>Auth and billing state.</td></tr>
+    <tr><td>Checkout</td><td>Card details</td><td>Stripe. Emvori stores entitlement state, not full card numbers.</td></tr>
+    <tr><td>Gmail</td><td>Draft payload after you approve</td><td>Google draft-only. No send capability.</td></tr>
+    <tr><td>Operator</td><td>Approved action payload only</td><td>The destination you approved. Unapproved steps do not execute.</td></tr>
+  </tbody>
+</table>
+<h2>Training and retention</h2>
+<ul>
+  <li>Emvori does not train a public foundation model of its own.</li>
+  <li>Prompts can reach model providers that perform inference. Do not paste passwords, private keys, seed phrases, or full card numbers.</li>
+  <li>Usage stored by Emvori: plan counters, limited product events, errors, and health signals.</li>
+  <li>Safety reports include only the category and excerpt you submit. Hidden reasoning and credentials are not attached automatically.</li>
+</ul>
+<h2>Human in the loop</h2>
+<ul>
+  <li>Agent may plan and draft.</li>
+  <li>Mail is draft-only.</li>
+  <li>External Operator actions require an explicit approval.</li>
+  <li>A completed-looking step without approval is a product defect, not a feature.</li>
+</ul>
+<h2>How we prove it</h2>
+<ul>
+  <li><a href="./scoreboard.html">Public gates</a> — stranger-reachable JSON health, anonymous chat, honest research refusals.</li>
+  <li><a href="./plans.html">Plan limits</a> — server-enforced, reset UTC daily.</li>
+  <li><a href="./briefs.html">Public briefs</a> — dated, cited work product. Unknowns listed.</li>
+</ul>
+<h2>What Emvori is not</h2>
+<ul>
+  <li>Not an Aetheron token wallet, presale, staking, or AETH surface.</li>
+  <li>Not a claim that <code>emvori.ai</code> is live until registry and DNS are verified.</li>
+  <li>Not the AppDeploy URL. That origin is a legacy warmup shell.</li>
+  <li>Not “best AI in the world,” and not a sandbox leaderboard.</li>
+</ul>
+<p><a href="./privacy.html">Privacy</a> · <a href="./models.html">Models</a> · <a href="./scoreboard.html">Gates</a> · <a href="./support.html">Support</a></p>
+</main>
+</body>
+</html>

@@ -9,10 +9,21 @@ This repository is a continuity and trust surface only:
 - health-checked Open button (JSON ready on a non-tunnel public origin)
 - public plan limits
 - privacy and model routing disclosure
+- trust center
+- public briefs
 - support contact
 - public gates / scoreboard
 
 It is not an Aetheron token surface and must not advertise `emvori.ai` until registry ownership and DNS are verified.
+
+## Pages
+
+- `index.html` — public entry
+- `trust.html` — what is stored, what leaves, what requires approval
+- `briefs.html` — index of public briefs
+- `briefs/` — dated HTML briefs
+- `brand.html` — public voice rules
+- `plans.html` / `privacy.html` / `models.html` / `scoreboard.html` / `support.html`
 
 ## current.json contract
 
