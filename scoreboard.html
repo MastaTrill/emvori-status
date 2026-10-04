@@ -20,18 +20,18 @@ code{color:#e8f0f2}
 <h1>Public gates</h1>
 <p class="box ok">Not a ranking. Not a model arena. These are the only numbers Emvori will put on a public page. Public-live requires a paid non-tunnel origin answering JSON health.</p>
 <table>
-  <thead><tr><th>Gate</th><th>Target</th><th>2026-09-25 13:35 UTC</th><th>2026-09-27 08:28 UTC</th></tr></thead>
+  <thead><tr><th>Gate</th><th>Target</th><th>2026-09-25 13:35 UTC</th><th>2026-09-27 08:28 UTC</th><th>2026-10-04 10:17 UTC</th></tr></thead>
   <tbody>
-    <tr><td>Stranger-reachable JSON health</td><td>ready on paid public origin</td><td>fail — no public vendor in <code>current.json</code></td><td>pass — Render <code>https://emvori-native.onrender.com</code> <code>/api/emvori-health</code> and <code>/railway-health</code> return <code>{"ready":true}</code>; header <code>x-emvori-runtime: native</code></td></tr>
-    <tr><td>Tailscale <code>emvori.tailebb593.ts.net</code></td><td>operator only</td><td>fail off-net — TLS handshake error</td><td>not re-probed off-net; still operator-only</td></tr>
-    <tr><td>Cloudflare tunnel JSON health</td><td>operator only</td><td>pass — tunnel ready</td><td>not used as public-live; Render is the declared primary</td></tr>
-    <tr><td>Anonymous <code>POST /api/chat</code></td><td>stranger network</td><td>pass on tunnel only</td><td>pass on Render — <code>{"messages":[{"role":"user","content":"ping"}]}</code> replies <code>Pong. Emvori workspace is online and ready.</code>, profile <code>fast</code></td></tr>
-    <tr><td>Anonymous <code>POST /api/research</code></td><td>stranger network</td><td>fail — Cloudflare 502</td><td>soft-fail honest — 200-class JSON: not enough matching evidence / add a public URL; Web index 0 sources. Not a 502.</td></tr>
-    <tr><td>AppDeploy <code>emvori-2njpkx.v2.appdeploy.ai</code></td><td>never public-live</td><td>fail — HTML shell</td><td>fail — S3/CloudFront HTML shell still served</td></tr>
-    <tr><td>Second-vendor fallback</td><td>paid public origin</td><td>none</td><td>fail — Fly unresolved, <code>emvori.ai</code> unresolved, Railway not declared</td></tr>
-    <tr><td>Invented citations (bakeoff)</td><td>0</td><td>not run — no public origin</td><td>not run this session</td></tr>
-    <tr><td>False side-effect completions</td><td>0</td><td>not run — no public origin</td><td>not run this session</td></tr>
-    <tr><td>Unknown on no-evidence traps</td><td>required</td><td>not run — no public origin</td><td>research already refuses empty evidence; bakeoff still not run</td></tr>
+    <tr><td>Stranger-reachable JSON health</td><td>ready on paid public origin</td><td>fail — no public vendor in <code>current.json</code></td><td>pass — Render <code>https://emvori-native.onrender.com</code> <code>/api/emvori-health</code> and <code>/railway-health</code> return <code>{"ready":true}</code>; header <code>x-emvori-runtime: native</code></td><td>pass — Render <code>https://emvori-native.onrender.com/api/emvori-health</code> HTTP 200 <code>{"ready":true}</code>; header <code>x-emvori-runtime: native</code>; Core v0.20; web index 0; crawler ready</td></tr>
+    <tr><td>Tailscale <code>emvori.tailebb593.ts.net</code></td><td>operator only</td><td>fail off-net — TLS handshake error</td><td>not re-probed off-net; still operator-only</td><td>not re-probed; still operator-only</td></tr>
+    <tr><td>Cloudflare tunnel JSON health</td><td>operator only</td><td>pass — tunnel ready</td><td>not used as public-live; Render is the declared primary</td><td>not used as public-live</td></tr>
+    <tr><td>Anonymous <code>POST /api/chat</code></td><td>stranger network</td><td>pass on tunnel only</td><td>pass on Render — <code>{"messages":[{"role":"user","content":"ping"}]}</code> replies <code>Pong. Emvori workspace is online and ready.</code>, profile <code>fast</code></td><td>not re-probed this session</td></tr>
+    <tr><td>Anonymous <code>POST /api/research</code></td><td>stranger network</td><td>fail — Cloudflare 502</td><td>soft-fail honest — 200-class JSON: not enough matching evidence / add a public URL; Web index 0 sources. Not a 502.</td><td>fail — stranger POST timed out after 40s with 0 bytes on 2026-10-03. Not scored.</td></tr>
+    <tr><td>AppDeploy <code>emvori-2njpkx.v2.appdeploy.ai</code></td><td>never public-live</td><td>fail — HTML shell</td><td>fail — S3/CloudFront HTML shell still served</td><td>still not an Open target. Public noindex redirect is <a href="./legacy.html">legacy.html</a>. Host 301 is not set from GitHub.</td></tr>
+    <tr><td>Second-vendor fallback</td><td>paid public origin</td><td>none</td><td>fail — Fly unresolved, <code>emvori.ai</code> unresolved, Railway not declared</td><td>fail — <code>current.json</code> fallback empty; Fly unresolved</td></tr>
+    <tr><td>Invented citations (bakeoff)</td><td>0</td><td>not run — no public origin</td><td>not run this session</td><td>not run</td></tr>
+    <tr><td>False side-effect completions</td><td>0</td><td>not run — no public origin</td><td>not run this session</td><td>not run</td></tr>
+    <tr><td>Unknown on no-evidence traps</td><td>required</td><td>not run — no public origin</td><td>research already refuses empty evidence; bakeoff still not run</td><td>not run — research POST timed out</td></tr>
   </tbody>
 </table>
 <h2>What this page will never say</h2>
