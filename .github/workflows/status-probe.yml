@@ -1,0 +1,63 @@
+name: Status probe
+
+on:
+  schedule:
+    - cron: '7 13 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe primary health endpoint
+        id: probe
+        run: |
+          READY=false
+          for i in 1 2 3 4 5; do
+            if curl -fsS --max-time 60 https://emvori-native.onrender.com/railway-health -o /tmp/health.json; then
+              if python3 -c "import json,sys; sys.exit(0 if json.load(open('/tmp/health.json')).get('ready') is True else 1)"; then
+                READY=true
+                break
+              fi
+            fi
+            sleep 30
+          done
+          echo "ready=$READY" >> "$GITHUB_OUTPUT"
+      - name: Write current.json
+        env:
+          PROBE_READY: ${{ steps.probe.outputs.ready }}
+        run: |
+          python3 - <<'PYEOF'
+          import json, os
+          from datetime import datetime, timezone
+          ready = os.environ["PROBE_READY"] == "true"
+          if ready:
+              reason = "Render standalone origin live; anonymous health endpoint reports ready on the current production deploy. Second-vendor fallback not deployed. AppDeploy/nip.io are legacy overlay shells, not fallback."
+          else:
+              reason = "Scheduled probe could not confirm the primary origin healthy after retries. Second-vendor fallback not deployed."
+          data = {
+              "primary": "https://emvori-native.onrender.com",
+              "fallback": "",
+              "updatedAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+              "ready": ready,
+              "reason": reason,
+          }
+          with open("current.json", "w") as f:
+              json.dump(data, f, indent=2)
+              f.write("\n")
+          PYEOF
+      - name: Commit if changed
+        run: |
+          git config user.name "emvori-status probe"
+          git config user.email "actions@github.com"
+          git add current.json
+          if git diff --cached --quiet; then
+            echo "No change"
+          else
+            git commit -m "status: scheduled probe $(date -u +%Y-%m-%d)"
+            git push
+          fi
