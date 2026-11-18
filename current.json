@@ -1,7 +1,7 @@
 {
   "primary": "https://emvori-native.onrender.com",
   "fallback": "",
-  "updatedAt": "2026-11-17T21:44:15.000Z",
+  "updatedAt": "2026-11-18T21:22:40.000Z",
   "ready": true,
   "reason": "Render standalone origin live; anonymous health endpoint reports ready on the current production deploy. Second-vendor fallback not deployed. AppDeploy/nip.io are legacy overlay shells, not fallback."
 }
